@@ -8,7 +8,7 @@ load_dotenv()
 
 # load the token
 TOKEN = os.getenv('DISCORD_TOKEN')
-
+# start the client
 client = discord.Client()
 
 @client.event
@@ -20,8 +20,8 @@ async def on_message(message):
     if message.author == client.user:
         return
     if ';get' in message.content:
-        needle = message.content[5:]
-        # ok, this is shitty, ill fix
+        # comparing strings in lowercase always works, right?
+        needle = message.content[5:].lower()
         items = findItem(needle)
         if len(items) > 10:
             await message.channel.send("Too many results! Please redefine your search.")
@@ -44,7 +44,7 @@ def findItem(needle):
     res = []
     for key, value in haystack.items():
         for item in value:
-            if needle in item["name"]:
+            if needle in item["name"].lower():
                 res.append(item)
     return res
 
@@ -52,25 +52,14 @@ def findPicture(needle):
     with open("items.json", encoding="utf8") as f:
         haystack = json.load(f)
     for hay in haystack:
-        if needle["name"] == hay["name"]:
+        if needle["name"] == hay["name"].lower():
             for hays in hay["variants"]:
                 if "image" in hays:
                     return hays["image"]
                 else:
-                	return "https://acnhcdn.com/latest/noImage.png"
+                	return "https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png"
+    return "https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png"
 
-def printResults(results):
-    if len(results) > 20:
-        return 'Too many results! Please redefine your search.'
-    elif len(results) == 0:
-        return 'No results!'
-    else:
-        res = "I've found:\n```c\n"
-        for result in results:
-            if "color" in result:
-                res += "\nName: " + result["color"] + " " + result["name"] + " " + "\nid:" + result["id"][1]
-            else:
-                res += "\nName: " + result["name"] + "\nid: " + result["id"][1]
-        return res + "\n```" 
+
 
 client.run(TOKEN)

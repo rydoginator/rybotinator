@@ -7,4 +7,3 @@ A discord bot that parses item names
 # How to use?
 * I basically followed this [guide](https://realpython.com/how-to-make-a-discord-bot-python/) and used Python3
 * If you don't plan on hosting the bot, then join my server! https://discord.gg/EZSxqRr
-* 
