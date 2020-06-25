@@ -21,6 +21,9 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+    if message.content == ';help':
+    	msg = 'To use:\n`;get <item>` searches for items based on your input and returns a maximum of 10 results\n`;get <"item">` searches for the exact result of the item in quotes'
+    	await message.channel.send(msg)
     if ';get' in message.content:
         needle = ''
         items = []
