@@ -55,7 +55,7 @@ async def on_message(message):
                 await message.channel.send(embed=embed)
 
 def findItem(needle):
-    with open("items_USen.json") as f:
+    with open("items_USen.json", encoding="utf8") as f:
         haystack = json.load(f)
     res = []
     for key, value in haystack.items():
@@ -65,7 +65,7 @@ def findItem(needle):
     return res
 
 def quoteFindItem(needle):
-    with open("items_USen.json") as f:
+    with open("items_USen.json", encoding="utf8") as f:
         haystack = json.load(f)
     res = []
     for key, value in haystack.items():
